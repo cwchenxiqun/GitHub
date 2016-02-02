@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="StaticMapper">
+
+    <resultMap type="SysStatic" id="menuResultMap">
+        <id column="STATIC_KEY" property="STATIC_KEY"/>
+        <result column="STATIC_VALUE" property="STATIC_VALUE"/>
+        <result column="DESCRIPTION" property="DESCRIPTION"/>
+    </resultMap>
+
+    <!-- 新增用户 -->
+    <insert id="addStatic" parameterType="SysStatic" flushCache="false">
+        insert into SYS_STATIC (
+        STATIC_KEY,
+        STATIC_VALUE,
+        DESCRIPTION
+        ) values (
+        #{STATIC_KEY},
+        #{STATIC_VALUE},
+        #{DESCRIPTION}
+        )
+    </insert>
+
+    <sql id="Base_Column_List">
+		STATIC_KEY,STATIC_VALUE
+	</sql>
+
+    <select id="getAllStatic" resultMap="menuResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        FROM SYS_STATIC
+    </select>
+
+    <select id="getStaticByKey" parameterType="SysStatic" resultMap="menuResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        FROM SYS_STATIC where STATIC_KEY = #{STATIC_KEY}
+    </select>
+
+    <update id="updateByKey" parameterType="SysStatic" flushCache="false">
+        update SYS_STATIC set
+        STATIC_VALUE = #{STATIC_VALUE}
+        where STATIC_KEY = #{STATIC_KEY}
+    </update>
+
+</mapper>
